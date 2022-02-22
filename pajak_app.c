@@ -51,6 +51,7 @@
 // =========================================
 #ifdef _WIN32
 #include <windows.h>
+#define OS_Windows
 #else
 #include <unistd.h>
 #endif
@@ -59,7 +60,6 @@
 // Area Deklarasi function
 // =========================================
 void clear_screen();
-void check_input();
 void format_angka();
 void menu();
 
@@ -67,6 +67,10 @@ void menu();
 // Area main() program
 // =========================================
 int main(){
+	#ifdef OS_Windows
+	system("title App Hitung Pajak");
+	#endif
+	
 	// Panggil function clear_screen
 	clear_screen();
 	
@@ -83,41 +87,6 @@ void clear_screen(){
 	// Untuk bersihkan konsol
 	// Command cmd / terminal
 	system("@cls||clear");
-}
-
-// =========================================
-// Area function check_input
-// =========================================
-void check_input(int input, int opsi){
-	
-	// Untuk cek input menu
-	if(opsi == 1){
-		
-		if(input >= 0 && input < 10){
-			
-			// Lanjut..
-			
-		} else {
-			
-			menu(0);
-			
-		}
-		
-	} // Untuk cek input tanggungan
-	else if(opsi == 2){
-		
-		if(input >= 0 && input <= 3){
-			
-			// Lanjut..
-			
-		} else {
-			
-			menu(2);
-			
-		}
-		
-	}
-	
 }
 
 // =========================================
@@ -190,17 +159,40 @@ void menu(int option){
 		printf("  [1] Hitung Pajak\n");
 		printf("  [2] Keluar dari Program\n\n");
 		
-		printf("  [>] Pilih Menu : ");
+		printf("  [>] Pilih Menu    : [1-2] ");
 		scanf("%d", &input_pilihan_menu);
 		
-		check_input(input_pilihan_menu, 1);
-		
-		if(input_pilihan_menu == 1){
-			menu(2);
-		} else if(input_pilihan_menu == 2){
-			menu(9);
-		}else{
+		if(input_pilihan_menu == 1 || input_pilihan_menu == 2){
+			
+			if(input_pilihan_menu == 1){
+				menu(2);
+			} else if(input_pilihan_menu == 2){
+				printf("  [?] Keluar Program? [Y/T] ");
+				scanf(" %c", &menu_exit);
+				
+				menu_exit = toupper(menu_exit);
+				
+				if(menu_exit == 'Y'){
+					
+					menu(9);
+					
+				} else if(menu_exit == 'T'){
+					
+					menu(1);
+					
+				} else {
+					
+					menu(0);
+					
+				}
+			}else{
+				menu(0);
+			}
+			
+		} else {
+			
 			menu(0);
+			
 		}
 		
 	} // Menu awal -> proses penghitungan pajak
@@ -210,7 +202,7 @@ void menu(int option){
 		
 		printf("\n [#] Program Menghitung Pajak\n\n");
 		
-		printf("  [>] Apakah anda sudah nikah? (y/n) ");
+		printf("  [>] Apakah anda sudah nikah? [Y/T] ");
 		scanf(" %c", &status_pernikahan);
 		
 		status_pernikahan = toupper(status_pernikahan);
@@ -220,7 +212,7 @@ void menu(int option){
 			
 			strcat(temp_pernikahan, "Iya");
 			
-			printf("  [>] Apakah penghasilan anda digabung? (y/n) ");
+			printf("  [>] Apakah penghasilan anda digabung? [Y/T] ");
 			scanf(" %c", &status_penghasilan);
 			
 			status_penghasilan = toupper(status_penghasilan);
@@ -232,32 +224,46 @@ void menu(int option){
 				
 				ptkp = 112500000;
 				
-				printf("  [>] Berapa jumlah tanggungan anda? (0-3) ");
+				printf("  [>] Berapa jumlah tanggungan anda? [0-3] ");
 				scanf(" %d", &jumlah_tanggungan);
 				
-				check_input(jumlah_tanggungan, 2);
-				
-				for(ulangi = 0; ulangi < jumlah_tanggungan; ulangi++){
+				if(jumlah_tanggungan == 0 || jumlah_tanggungan == 1 || jumlah_tanggungan == 2 || jumlah_tanggungan == 3){
 					
-					ptkp += 4500000;
+					for(ulangi = 0; ulangi < jumlah_tanggungan; ulangi++){
+						
+						ptkp += 4500000;
+						
+					}
+					
+				} else {
+					
+					clear_screen();
+					menu(0);
 					
 				}
 				
 			} // Hitung PTKP -> nikah -> tidak digabung
-			else if(status_penghasilan == 'N'){
+			else if(status_penghasilan == 'T'){
 				
 				strcat(temp_penghasilan, "Tidak");
 				
 				ptkp = 58500000;
 				
-				printf("  [>] Berapa jumlah tanggungan anda? (0-3) ");
+				printf("  [>] Berapa jumlah tanggungan anda? [0-3] ");
 				scanf(" %d", &jumlah_tanggungan);
 				
-				check_input(jumlah_tanggungan, 2);
-				
-				for(ulangi = 0; ulangi < jumlah_tanggungan; ulangi++){
+				if(jumlah_tanggungan == 0 || jumlah_tanggungan == 1 || jumlah_tanggungan == 2 || jumlah_tanggungan == 3){
 					
-					ptkp += 4500000;
+					for(ulangi = 0; ulangi < jumlah_tanggungan; ulangi++){
+						
+						ptkp += 4500000;
+						
+					}
+					
+				} else {
+					
+					clear_screen();
+					menu(0);
 					
 				}
 				
@@ -269,23 +275,30 @@ void menu(int option){
 			}
 			
 		} // Hitung PTKP -> tidak nikah
-		else if(status_pernikahan == 'N'){
+		else if(status_pernikahan == 'T'){
 			
 			strcat(temp_pernikahan, "Tidak");
 			strcat(temp_penghasilan, "Tidak");
 			
 			ptkp = 54000000;
 			
-			printf("  [>] Berapa jumlah tanggungan anda? (0-3) ");
+			printf("  [>] Berapa jumlah tanggungan anda? [0-3] ");
 			scanf(" %d", &jumlah_tanggungan);
 			
-			check_input(jumlah_tanggungan, 2);
-			
-			for(ulangi = 0; ulangi < jumlah_tanggungan; ulangi++){
-			
-				ptkp += 4500000;
-				
-			}
+			if(jumlah_tanggungan == 0 || jumlah_tanggungan == 1 || jumlah_tanggungan == 2 || jumlah_tanggungan == 3){
+					
+					for(ulangi = 0; ulangi < jumlah_tanggungan; ulangi++){
+						
+						ptkp += 4500000;
+						
+					}
+					
+				} else {
+					
+					clear_screen();
+					menu(0);
+					
+				}
 			
 		} // Hitung PTKP -> handle error input
 		else {
@@ -383,7 +396,7 @@ void menu(int option){
 			
 			menu_exit = '\0';
 			
-			printf("\n [?] Keluar Program? (y/n) ");
+			printf("\n [?] Keluar Program? [Y/T] ");
 			scanf(" %c", &menu_exit);
 			
 			menu_exit = toupper(menu_exit);
@@ -392,13 +405,13 @@ void menu(int option){
 			
 				menu(9);
 				
-			} else if(menu_exit == 'N'){
+			} else if(menu_exit == 'T'){
 				
 				menu(1);
 				
 			} else {
 				
-				menu(2);
+				menu(0);
 				
 			}
 			
@@ -425,7 +438,7 @@ void menu(int option){
 		
 		menu_exit = '\0';
 		
-		printf("\n [?] Keluar Program? (y/n) ");
+		printf("\n [?] Keluar Program? [Y/T] ");
 		scanf(" %c", &menu_exit);
 		
 		menu_exit = toupper(menu_exit);
@@ -434,13 +447,13 @@ void menu(int option){
 			
 			menu(9);
 			
-		} else if(menu_exit == 'N'){
+		} else if(menu_exit == 'T'){
 			
 			menu(1);
 			
 		} else {
 			
-			menu(2);
+			menu(0);
 			
 		}
 		
