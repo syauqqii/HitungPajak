@@ -1,44 +1,5 @@
-/*
-	-------------------------------------------------
-	[#] App Hitung Pajak :
-	-------------------------------------------------
-	
-	[#] Lapisan Pajak :
-	-------------------------------------------------
-		- Lapis 1:   0 - 60jt      (05%) 
-		- Lapis 2: > 60jt - 250jt  (15%)
-		- Lapis 3: > 250jt - 500jt (25%)
-		- Lapis 4: > 500jt - 5m    (30%)
-		- Lapis 5: > 5m            (35%)
-	-------------------------------------------------
-	
-	[#] PTKP : 
-	-------------------------------------------------
-		[!] Info :
-			- 1 Tanggungan : 4.500.000
-	-------------------------------------------------
-		[+] Tidak kawin :
-			- TK0 : 54.000.000
-			- TK1 : 58.500.000
-			- TK2 : 63.000.000
-			- TK3 : 67.500.000
-	-------------------------------------------------
-		[+] Kawin :
-			- K0 : 58.500.000
-			- K1 : 63.000.000
-			- K2 : 67.500.000
-			- K3 : 72.000.000
-	-------------------------------------------------
-		[+] Kawin, Penghasilan Suami Istri digabung :
-			- K/I/0 : 112.500.000
-			- K/I/1 : 117.000.000
-			- K/I/2 : 121.500.000
-			- K/I/3 : 126.000.000
-	-------------------------------------------------
-*/
-
 // =========================================
-// Area Import library
+// Import Library
 // =========================================
 #include <stdio.h>
 #include <stdlib.h>
@@ -47,7 +8,7 @@
 #include <conio.h>
 
 // =========================================
-// Area Import library bersyarat
+// Import Library with Case
 // =========================================
 #ifdef _WIN32
 #include <windows.h>
@@ -57,14 +18,14 @@
 #endif
 
 // =========================================
-// Area Deklarasi function
+// Declaration Function
 // =========================================
 void clear_screen();
 void format_angka();
 void menu();
 
 // =========================================
-// Area main() program
+// Main Function
 // =========================================
 int main(){
 	#ifdef OS_Windows
@@ -81,7 +42,7 @@ int main(){
 }
 
 // =========================================
-// Area function clear_screen()
+// clear_screen() function
 // =========================================
 void clear_screen(){
 	// Untuk bersihkan konsol
@@ -90,7 +51,9 @@ void clear_screen(){
 }
 
 // =========================================
-// Area function format_angka()
+// format_angka function
+// @params:
+// 	- number(angka) represent integer
 // =========================================
 void format_angka(long long int angka){
 	// Jika parameter angka < 0 / negatif, maka tampilkan negatif
@@ -110,11 +73,12 @@ void format_angka(long long int angka){
 	
 	// Print hasil dengan format
 	printf(".%03lld", angka % 1000);
-	
 }
 
 // =========================================
-// Area function menu()
+// menu() function
+// @params:
+// 	- number(option) represent integer
 // =========================================
 void menu(int option){
 	// Deklarasi input menu awal
@@ -142,17 +106,14 @@ void menu(int option){
 	
 	// Menu awal -> menu tidak tersedia (handle error)
 	if(option == 0){
-		
 		clear_screen();
 		
 		printf("\n  [#] Error: Menu Tidak Tersedia!\n");
 		
 		sleep(1);
 		exit(0);
-		
 	} // Menu awal -> halaman utama
 	else if(option == 1){
-		
 		clear_screen();
 		
 		printf("\n [#] Program Menghitung Pajak\n\n");
@@ -163,7 +124,6 @@ void menu(int option){
 		scanf("%d", &input_pilihan_menu);
 		
 		if(input_pilihan_menu == 1 || input_pilihan_menu == 2){
-			
 			if(input_pilihan_menu == 1){
 				menu(2);
 			} else if(input_pilihan_menu == 2){
@@ -171,33 +131,22 @@ void menu(int option){
 				scanf(" %c", &menu_exit);
 				
 				menu_exit = toupper(menu_exit);
-				
+
 				if(menu_exit == 'Y'){
-					
 					menu(9);
-					
 				} else if(menu_exit == 'T'){
-					
 					menu(1);
-					
 				} else {
-					
 					menu(0);
-					
 				}
 			}else{
 				menu(0);
 			}
-			
 		} else {
-			
 			menu(0);
-			
 		}
-		
 	} // Menu awal -> proses penghitungan pajak
 	else if(option == 2){
-		
 		clear_screen();
 		
 		printf("\n [#] Program Menghitung Pajak\n\n");
@@ -209,7 +158,6 @@ void menu(int option){
 		
 		// Hitung PTKP -> nikah
 		if(status_pernikahan == 'Y'){
-			
 			strcat(temp_pernikahan, "Iya");
 			
 			printf("  [>] Apakah penghasilan anda digabung? [Y/T] ");
@@ -219,7 +167,6 @@ void menu(int option){
 			
 			// Hitung PTKP -> nikah -> digabung
 			if(status_penghasilan == 'Y'){
-				
 				strcat(temp_penghasilan, "Iya");
 				
 				ptkp = 112500000;
@@ -228,23 +175,15 @@ void menu(int option){
 				scanf(" %d", &jumlah_tanggungan);
 				
 				if(jumlah_tanggungan == 0 || jumlah_tanggungan == 1 || jumlah_tanggungan == 2 || jumlah_tanggungan == 3){
-					
 					for(ulangi = 0; ulangi < jumlah_tanggungan; ulangi++){
-						
 						ptkp += 4500000;
-						
 					}
-					
 				} else {
-					
 					clear_screen();
 					menu(0);
-					
 				}
-				
 			} // Hitung PTKP -> nikah -> tidak digabung
 			else if(status_penghasilan == 'T'){
-				
 				strcat(temp_penghasilan, "Tidak");
 				
 				ptkp = 58500000;
@@ -253,30 +192,19 @@ void menu(int option){
 				scanf(" %d", &jumlah_tanggungan);
 				
 				if(jumlah_tanggungan == 0 || jumlah_tanggungan == 1 || jumlah_tanggungan == 2 || jumlah_tanggungan == 3){
-					
 					for(ulangi = 0; ulangi < jumlah_tanggungan; ulangi++){
-						
 						ptkp += 4500000;
-						
 					}
-					
 				} else {
-					
 					clear_screen();
 					menu(0);
-					
 				}
-				
 			} // Hitung PTKP -> nikah -> handle error input
 			else {
-				
 				menu(2);
-				
 			}
-			
 		} // Hitung PTKP -> tidak nikah
 		else if(status_pernikahan == 'T'){
-			
 			strcat(temp_pernikahan, "Tidak");
 			strcat(temp_penghasilan, "Tidak");
 			
@@ -286,25 +214,16 @@ void menu(int option){
 			scanf(" %d", &jumlah_tanggungan);
 			
 			if(jumlah_tanggungan == 0 || jumlah_tanggungan == 1 || jumlah_tanggungan == 2 || jumlah_tanggungan == 3){
-					
 					for(ulangi = 0; ulangi < jumlah_tanggungan; ulangi++){
-						
 						ptkp += 4500000;
-						
 					}
-					
 				} else {
-					
 					clear_screen();
 					menu(0);
-					
 				}
-			
 		} // Hitung PTKP -> handle error input
 		else {
-			
 			menu(2);
-			
 		}
 		
 		clear_screen();
@@ -319,33 +238,25 @@ void menu(int option){
 		
 		// Lapis 1 : 0 - 60jt
 		if(pkp > 0 && pkp <= 60000000){
-			
 			lapis_1 = pkp * 0.05;
-			
 			pajak   = lapis_1;
-			
 		} // Lapis 2 : > 60jt - 250jt
 		else if(pkp > 60000000 && pkp <= 250000000){
-			
 			lapis_1 = 60000000 * 0.05;
 			
 			lapis_2 = (pkp - 60000000) * 0.15;
 			
 			pajak   = lapis_1 + lapis_2;
-			
 		} // Lapis 3 : > 250jt - 500jt
 		else if(pkp > 250000000 && pkp <= 500000000){
-			
 			lapis_1 = 60000000 * 0.05;
 			lapis_2 = (250000000 - 60000000) * 0.15;
 			
 			lapis_3 = (pkp - 250000000) * 0.25;
 			
 			pajak   = lapis_1 + lapis_2 + lapis_3;
-			
 		} // Lapis 4 : > 500jt - 5m
 		else if(pkp > 500000000 && pkp <= 5000000000){
-			
 			lapis_1 = 60000000 * 0.05;
 			lapis_2 = (250000000 - 60000000) * 0.15;
 			lapis_3 = (500000000 - 250000000) * 0.25;
@@ -353,10 +264,8 @@ void menu(int option){
 			lapis_4 = (pkp - 500000000) * 0.3;
 			
 			pajak   = lapis_1 + lapis_2 + lapis_3 + lapis_4;
-			
 		} // Lapis 5 : > 5m
 		else if(pkp > 5000000000){
-			
 			lapis_1 = 60000000 * 0.05;
 			lapis_2 = (250000000 - 60000000) * 0.15;
 			lapis_3 = (500000000 - 250000000) * 0.25;
@@ -365,10 +274,8 @@ void menu(int option){
 			lapis_5 = (pkp - 5000000000) * 0.35;
 			
 			pajak = lapis_1 + lapis_2 + lapis_3 + lapis_4 + lapis_5;
-			
 		} // Jika hasil minus, maka tidak wajib pajak
 		else {
-			
 			clear_screen();
 			
 			printf("\n [>] Anda tidak wajib pajak!\n");
@@ -402,19 +309,12 @@ void menu(int option){
 			menu_exit = toupper(menu_exit);
 			
 			if(menu_exit == 'Y'){
-			
 				menu(9);
-				
 			} else if(menu_exit == 'T'){
-				
 				menu(1);
-				
 			} else {
-				
 				menu(0);
-				
 			}
-			
 		}
 		
 		clear_screen();
@@ -444,19 +344,12 @@ void menu(int option){
 		menu_exit = toupper(menu_exit);
 		
 		if(menu_exit == 'Y'){
-			
 			menu(9);
-			
 		} else if(menu_exit == 'T'){
-			
 			menu(1);
-			
 		} else {
-			
 			menu(0);
-			
 		}
-		
 	} // Menu awal -> keluar program
 	else if(option == 9){
 		
@@ -466,7 +359,5 @@ void menu(int option){
 		
 		sleep(1);
 		exit(0);
-		
 	}
-	
 }
