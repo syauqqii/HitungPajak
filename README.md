@@ -1,5 +1,10 @@
+## **ALERT**
+=====
+Program ini sudah saya buat sejak 26 Januari 2022, jika ada data yang kurang relevan dengan tahun ini atau peraturan pajak baru, mohon dimaklumi.
+
 ## **DOCUMENTATION**
-Aplikasi ini dibuat untuk tujuan edukasi serta untuk melatih bahasa C basic milik saya supaya tidak lupa.
+=====
+Program ini dibuat untuk tujuan edukasi serta untuk melatih bahasa C basic milik saya supaya tidak lupa.
 ```
 -------------------------------------------------
 [#] DOCUMENTATION - App Hitung Pajak :
