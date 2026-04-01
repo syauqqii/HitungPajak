@@ -1,50 +1,78 @@
-## **ALERT**
-Program ini sudah saya buat sejak ```26 Januari 2022```, jika ada data yang kurang relevan dengan tahun ini atau peraturan pajak baru, mohon dimaklumi.
-
-## **DOCUMENTATION**
-Program ini dibuat untuk tujuan edukasi serta untuk melatih bahasa C basic milik saya supaya tidak lupa.
 ```
--------------------------------------------------
-[#] DOCUMENTATION - App Hitung Pajak :
--------------------------------------------------
-
-[#] Lapisan Pajak :
--------------------------------------------------
-  - Lapis 1:   0 - 60jt      (05%) 
-  - Lapis 2: > 60jt - 250jt  (15%)
-  - Lapis 3: > 250jt - 500jt (25%)
-  - Lapis 4: > 500jt - 5m    (30%)
-  - Lapis 5: > 5m            (35%)
--------------------------------------------------
-
-[#] VARIABLE :
-TK  = Tidak Kawin (Single, belum menikah)
-K   = Kawin (Menikah)
-K/I = Kawin (Menikah) + Penghasilan Suami Istri digabung
->> 0 - 3 = tanggungan
-   TK0 = Tidak Kawin(TK), tidak memiliki tanggungan(0)
-
-[#] PTKP : 
--------------------------------------------------
-  [!] Info :
-    - 1 Tanggungan : 4.500.000
--------------------------------------------------
-  [+] Tidak kawin :
-    - TK0 : 54.000.000
-    - TK1 : 58.500.000
-    - TK2 : 63.000.000
-    - TK3 : 67.500.000
--------------------------------------------------
-  [+] Kawin :
-    - K0 : 58.500.000
-    - K1 : 63.000.000
-    - K2 : 67.500.000
-    - K3 : 72.000.000
--------------------------------------------------
-  [+] Kawin, Penghasilan Suami Istri digabung :
-    - K/I/0 : 112.500.000
-    - K/I/1 : 117.000.000
-    - K/I/2 : 121.500.000
-    - K/I/3 : 126.000.000
--------------------------------------------------
+  ◆━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◆
+  ║                                                  ║
+  ║    ▲  H I T U N G   P A J A K                  ║
+  ║    ◆  Indonesian Income Tax Calculator           ║
+  ║    ◇  v2.0.0 · 2026                             ║
+  ║                                                  ║
+  ◆━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━◆
 ```
+
+![Language](https://img.shields.io/badge/language-C11-blue?style=flat-square)
+![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20macOS%20%7C%20Windows-lightgrey?style=flat-square)
+![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)
+
+Kalkulator **Pajak Penghasilan Pasal 21** berbasis terminal. Menghitung PPh secara progresif berdasarkan status pernikahan, jumlah tanggungan, dan penghasilan bruto tahunan.
+
+---
+
+## Fitur
+
+- Tarif progresif 5 lapisan sesuai PMK-101/PMK.010/2016
+- Perhitungan PTKP otomatis (TK / K / K+I)
+- Rincian per lapisan pajak
+- Validasi input yang aman — tidak ada buffer overflow
+- UI terminal dengan desain geometris + warna ANSI
+- Cross-platform: **Linux · macOS · Windows**
+- Zero dependency — hanya C stdlib
+
+---
+
+## Build & Run
+
+**Linux / macOS**
+```sh
+make
+./hitung_pajak
+```
+
+**Windows (MinGW / MSYS2)**
+```sh
+make
+./hitung_pajak.exe
+```
+
+**Manual (semua platform)**
+```sh
+gcc -std=c11 -Wall -O2 -o hitung_pajak main.c
+```
+
+---
+
+## Tarif PPh Pasal 21
+
+| Lapisan | PKP                        | Tarif |
+|---------|----------------------------|-------|
+| 1       | Rp 0 – 60 juta             | 5%    |
+| 2       | Rp 60 juta – 250 juta      | 15%   |
+| 3       | Rp 250 juta – 500 juta     | 25%   |
+| 4       | Rp 500 juta – 5 miliar     | 30%   |
+| 5       | > Rp 5 miliar              | 35%   |
+
+---
+
+## Tabel PTKP
+
+| Status         | +0 tanggungan  | +1             | +2             | +3             |
+|----------------|----------------|----------------|----------------|----------------|
+| TK (Tidak Kawin) | Rp 54.000.000 | Rp 58.500.000 | Rp 63.000.000 | Rp 67.500.000 |
+| K (Kawin)        | Rp 58.500.000 | Rp 63.000.000 | Rp 67.500.000 | Rp 72.000.000 |
+| K/I (Gabung)     | Rp 112.500.000| Rp 117.000.000| Rp 121.500.000| Rp 126.000.000|
+
+> Dasar hukum: PMK Nomor 101/PMK.010/2016
+
+---
+
+## Lisensi
+
+MIT — bebas digunakan untuk keperluan edukasi dan pribadi.
